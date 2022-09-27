@@ -133,10 +133,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\SimpleGame\CircleCollision.cpp" />
     <ClCompile Include="Source\SimpleGame\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\SimpleGame\CircleCollision.h" />
     <ClInclude Include="Source\SimpleGame\Game.h" />
+    <ClInclude Include="Source\SimpleGame\mathdefs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

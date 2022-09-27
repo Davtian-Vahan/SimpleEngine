@@ -21,9 +21,18 @@
     <ClCompile Include="Source\SimpleGame\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SimpleGame\CircleCollision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SimpleGame\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SimpleGame\CircleCollision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SimpleGame\mathdefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
