@@ -1,4 +1,6 @@
 #include "Agario.h"
+#include "../MiscMathLibrary.h"
+
 #include <chrono>
 #include <thread>
 
@@ -65,7 +67,7 @@ void AgarioGame::SpawnCircles()
 
 		} while (CollisionExists(circle));
 
-		circle->setFillColor(sf::Color(2, 48, 32));
+		circle->setFillColor(SimpleMath::random_rgb());
 		SpawnActor(circle);
 	}
 

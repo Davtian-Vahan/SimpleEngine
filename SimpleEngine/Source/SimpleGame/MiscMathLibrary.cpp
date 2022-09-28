@@ -19,3 +19,16 @@ float SimpleMath::clamp(float x, float range_a, float range_b)
 {
 	return std::clamp(x, range_a, range_b);
 }
+
+int SimpleMath::rand_range(int min, int max)
+{
+	return min + rand() % max;
+}
+
+sf::Color SimpleMath::random_rgb()
+{
+	float r = rand_range(0, 38);
+	float g = rand_range(0, 235);
+	float b = rand_range(0, 48);
+	return sf::Color(r, g, b);
+}

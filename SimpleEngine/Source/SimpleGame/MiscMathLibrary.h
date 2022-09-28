@@ -18,4 +18,10 @@ public:
 
 	// Clamps a value to a given range
 	static float clamp(float x, float range_a, float range_b);
+
+	// Return random integer within the given range
+	static int rand_range(int min, int max);
+
+	// 
+	static sf::Color random_rgb();
 };
