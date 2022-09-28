@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,13 +134,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\SimpleGame\CircleCollision.cpp" />
-    <ClCompile Include="Source\SimpleGame\Game.cpp" />
+    <ClCompile Include="Source\SimpleGame\Agario\Agario.cpp" />
+    <ClCompile Include="Source\SimpleGame\GameBase.cpp" />
+    <ClCompile Include="Source\SimpleGame\MiscMathLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\SimpleGame\CircleCollision.h" />
-    <ClInclude Include="Source\SimpleGame\Game.h" />
-    <ClInclude Include="Source\SimpleGame\mathdefs.h" />
+    <ClInclude Include="Source\SimpleGame\Agario\Agario.h" />
+    <ClInclude Include="Source\SimpleGame\GameBase.h" />
+    <ClInclude Include="Source\SimpleGame\MiscMathLibrary.h" />
+    <ClInclude Include="Source\SimpleGame\SimpleCore.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
