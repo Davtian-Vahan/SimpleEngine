@@ -1,12 +1,9 @@
-#include "SimpleGame/Agario/Agario.h"
+#include "Agario/Agario.h"
+#include "Engine/GameManager.h"
+
 
 int main()
 {
-	srand(time(0));
-	GameBase* NewGame = new AgarioGame(1920.f, 1080.f);
-
-	NewGame->InitializeWorld();
-	NewGame->Run();
-	
-	return 0;
+	GameManager Manager(new AgarioGame());
+	return Manager.StartGame();
 }

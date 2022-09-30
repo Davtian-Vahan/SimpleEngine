@@ -37,6 +37,12 @@ void GameBase::InputHandling()
 	}
 }
 
+void GameBase::FrameLogic(float delta_time)
+{
+	// Time related member updates go here
+	// ...........
+}
+
 void GameBase::SpawnActor(ActorBase* actor)
 {
 	Actors.push_back(actor);
@@ -126,10 +132,15 @@ TVector GameBase::GetRandScreenPosition()
 	return TVector(rand() % video_mode.width, rand() % video_mode.height);
 }
 
+void GameBase::InitializeWorld()
+{
+	bGameRunning = true;
+}
+
 // Constructor
 GameBase::GameBase(const sf::VideoMode& in_videomode)
-	: render_window(in_videomode, ""),
-	video_mode(in_videomode)
+	: render_window(in_videomode, ""), video_mode(in_videomode),
+	  bGameRunning(false)
 {}
 
 // Destructor, release memory of actors
@@ -139,11 +150,4 @@ GameBase::~GameBase()
 	{
 		delete Actor;
 	}
-}
-
-// Start game loop
-void GameBase::Run()
-{
-	// main loop
-	while (Update()) {}
 }

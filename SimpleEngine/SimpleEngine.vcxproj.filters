@@ -18,27 +18,33 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SimpleGame\GameBase.cpp">
+    <ClCompile Include="Source\Engine\GameBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SimpleGame\MiscMathLibrary.cpp">
+    <ClCompile Include="Source\Engine\MiscMathLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SimpleGame\Agario\Agario.cpp">
+    <ClCompile Include="Source\Agario\Agario.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\SimpleGame\GameBase.h">
+    <ClInclude Include="Source\Engine\GameBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SimpleGame\MiscMathLibrary.h">
+    <ClInclude Include="Source\Engine\MiscMathLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SimpleGame\SimpleCore.h">
+    <ClInclude Include="Source\Engine\SimpleCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SimpleGame\Agario\Agario.h">
+    <ClInclude Include="Source\Agario\Agario.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

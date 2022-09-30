@@ -11,12 +11,13 @@
 
 class GameBase
 {
+	friend class GameManager;
 public:
 	// Game loop functions
 	virtual void Draw();
 	virtual void Display();
 	virtual void InputHandling();
-	virtual void FrameLogic() = 0;
+	virtual void FrameLogic(float delta_time);
 
 protected:
 	// Game logic functions
@@ -26,12 +27,16 @@ protected:
 
 public:
 	// Constructor & Destructor
-	GameBase(const sf::VideoMode& in_display);
+	explicit GameBase(const sf::VideoMode& in_display);
 	~GameBase();
 
 public:
+	// Delete copy functions
+	GameBase(const GameBase&) = delete;
+	void operator=(const GameBase&) = delete;
+
+public:
 	// Movement and collision related functions
-	
 	// Force a move to given position, even if blocked
 	void ForceMove(ActorBase* Actor, TVector new_pos);
 
@@ -48,21 +53,16 @@ public:
 	// Random functions TODO: Categorize
 	TVector GetRandScreenPosition();
 
-private:
-	// Singleton for the main game instance
-	static GameBase* game_instance; 
-
-	// Game loop updater function
-	virtual bool Update() = 0;
 public:
 	// Called from outside the SimpleEngine, to start a game instance loop
-	void Run();
-	virtual void InitializeWorld() = 0;
+	virtual void InitializeWorld();
 
 protected:
 	// Handle to main render window, video settings
 	sf::RenderWindow render_window;
 	sf::VideoMode    video_mode;
+
+	bool bGameRunning;
 
 	// Spawned actors
 	std::list<ActorBase*> Actors;

@@ -1,6 +1,5 @@
 #include "Agario.h"
-#include "../MiscMathLibrary.h"
-
+#include "../Engine/MiscMathLibrary.h"
 #include <chrono>
 #include <thread>
 
@@ -8,17 +7,22 @@ AgarioGame::AgarioGame(size_t screen_height, size_t screen_width)
 	: GameBase(sf::VideoMode(screen_height, screen_width))
 {}
 
+AgarioGame::AgarioGame()
+	: GameBase(sf::VideoMode(1920.f, 1080.f))
+{}
+
 void AgarioGame::InitializeWorld()
 {
+	Super::InitializeWorld();
 	SpawnCircles();
 }
 
 void AgarioGame::InputHandling()
 {
-	GameBase::InputHandling();
+	Super::InputHandling();
 
 	TVector displace{ 0.f, 0.f };
-	float speed_mutiplier = 3;
+	float speed_mutiplier = 1;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
@@ -46,6 +50,16 @@ void AgarioGame::InputHandling()
 
 
 	TryMove(ControlledActor, displace);
+}
+
+void AgarioGame::FrameLogic(float delta_time)
+{
+	Super::FrameLogic(delta_time);
+
+	if (Actors.size() == 1)
+	{
+		ControlledActor->setFillColor(sf::Color::Red);
+	}
 }
 
 void AgarioGame::SpawnCircles()
@@ -85,7 +99,7 @@ void AgarioGame::SpawnCircles()
 
 ActorBase* AgarioGame::TryMove(ActorBase* Actor, TVector offset)
 {
-	CircleActor* HitActor = SimpleCast(CircleActor*, GameBase::TryMove(Actor, offset));
+	CircleActor* HitActor = SimpleCast(CircleActor*, Super::TryMove(Actor, offset));
 	CircleActor* MyActor = SimpleCast(CircleActor*, Actor);
 
 	if (HitActor)
@@ -115,23 +129,4 @@ ActorBase* AgarioGame::TryMove(ActorBase* Actor, TVector offset)
 		}
 	}
 	return HitActor;
-}
-
-bool AgarioGame::Update()
-{
-	if (!render_window.isOpen()) return false;
-	InputHandling();
-	FrameLogic();
-	Draw();
-	Display();
-	std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	return true;
-}
-
-void AgarioGame::FrameLogic()
-{
-	if (Actors.size() == 1)
-	{
-		ControlledActor->setFillColor(sf::Color::Red);
-	}
 }
