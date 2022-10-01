@@ -1,5 +1,5 @@
 #include "Agario.h"
-#include "../Engine/MiscMathLibrary.h"
+#include <Engine/Misc/MiscMathLibrary.h>
 #include <chrono>
 #include <thread>
 
@@ -22,7 +22,7 @@ void AgarioGame::InputHandling()
 	Super::InputHandling();
 
 	TVector displace{ 0.f, 0.f };
-	float speed_mutiplier = 1;
+	float speed_mutiplier = 0.1;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
@@ -52,9 +52,9 @@ void AgarioGame::InputHandling()
 	TryMove(ControlledActor, displace);
 }
 
-void AgarioGame::FrameLogic(float delta_time)
+void AgarioGame::Tick(float delta_time)
 {
-	Super::FrameLogic(delta_time);
+	Super::Tick(delta_time);
 
 	if (Actors.size() == 1)
 	{

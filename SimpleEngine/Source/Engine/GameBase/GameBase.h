@@ -1,9 +1,10 @@
 #pragma once
 // Define SFML to be linked as a static library with the exe
 #define SFML_STATIC 
-#include <SFML/Graphics.hpp>
 #include <list>
-#include "SimpleCore.h"
+#include <SFML/Graphics.hpp>
+
+#include <Engine/Misc/SimpleCore.h>
 
 /*
 	GameBase declaration
@@ -17,7 +18,7 @@ public:
 	virtual void Draw();
 	virtual void Display();
 	virtual void InputHandling();
-	virtual void FrameLogic(float delta_time);
+	virtual void Tick(float delta_time);
 
 protected:
 	// Game logic functions
@@ -63,6 +64,7 @@ protected:
 	sf::VideoMode    video_mode;
 
 	bool bGameRunning;
+	float delta_time;
 
 	// Spawned actors
 	std::list<ActorBase*> Actors;

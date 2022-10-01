@@ -1,8 +1,9 @@
-#include "SimpleCore.h"
 #include "GameManager.h"
-#include "GameBase.h"
-#define DEBUG
 
+#include <Engine/Misc/SimpleCore.h>
+#include <Engine/GameBase/GameBase.h>
+
+#define DEBUG
 using namespace std::chrono;
 
 GameManager::GameManager(GameBase* in_game_ref)
@@ -22,9 +23,9 @@ int GameManager::StartGame()
 	// Time/frame related variables
 	time_point frame_start_time = system_clock::now();
 	time_point fps_start_time = system_clock::now();
-	float delta_time = 0.f; 
-	int   frame_count = 0;
-	double fps_value = 0.f;
+	float  delta_time  = 0.f; 
+	double fps_value   = 0.f;
+	int    frame_count = 0;
 
 	// Initialize game world 
 	game_instance->InitializeWorld();
@@ -37,11 +38,11 @@ int GameManager::StartGame()
 
 		// Main logical functions
 		game_instance->InputHandling();
-		game_instance->FrameLogic(delta_time);
+		game_instance->Tick(delta_time);
 		game_instance->Draw();
 		game_instance->Display();
 		// Get time passed since start of the frame
-		delta_time = (system_clock::now() - frame_start_time).count();
+		delta_time = duration_cast<seconds>(system_clock::now() - frame_start_time).count();
 
 		#ifdef DEBUG
 		// Calculate and show fps value per 3 secs (to console for now)
@@ -62,6 +63,10 @@ int GameManager::StartGame()
 
 		++frame_count;
 	}
+
+	#ifdef DEBUG
+	printf("Session ended");
+	#endif
 
 	// Catch game related errors here
 	// ...returns 0 for now

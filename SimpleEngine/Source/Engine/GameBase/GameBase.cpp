@@ -1,7 +1,6 @@
 #include "GameBase.h"
-#include "MiscMathLibrary.h"
-#include "SimpleCore.h"
 
+#include <Engine/Misc/MiscMathLibrary.h>
 #include <chrono>
 #include <thread>
 #include <ctime>
@@ -33,14 +32,18 @@ void GameBase::InputHandling()
 	while (render_window.pollEvent(poll_event))
 	{
 		if (poll_event.type == sf::Event::Closed)
+		{
 			render_window.close();
+			bGameRunning = false;
+		}
 	}
 }
 
-void GameBase::FrameLogic(float delta_time)
+void GameBase::Tick(float delta_time)
 {
 	// Time related member updates go here
 	// ...........
+	this->delta_time = delta_time;
 }
 
 void GameBase::SpawnActor(ActorBase* actor)
@@ -59,9 +62,10 @@ void GameBase::PossessToActor(ActorBase* actor)
 	ControlledActor = actor;
 }
 
-
 void GameBase::ForceMove(ActorBase* Actor, TVector offset)
 {
+	offset *= delta_time;
+
 	// Add the offset to current position and clamp it to screen 
 	TVector CachedPos = Actor->getPosition();
 	TVector ResultPos = GetPositionClamped(Actor->getPosition() + offset);
@@ -140,7 +144,7 @@ void GameBase::InitializeWorld()
 // Constructor
 GameBase::GameBase(const sf::VideoMode& in_videomode)
 	: render_window(in_videomode, ""), video_mode(in_videomode),
-	  bGameRunning(false)
+	  bGameRunning(false), delta_time(0.f)
 {}
 
 // Destructor, release memory of actors

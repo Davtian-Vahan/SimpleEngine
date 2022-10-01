@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Engine/GameBase.h"
+#include <Engine/GameBase/GameBase.h>
 
 class AgarioGame : public GameBase
 {
@@ -10,7 +10,7 @@ public:
 
 	virtual void InitializeWorld() override;
 	virtual void InputHandling() override;
-	virtual void FrameLogic(float delta_time) override;
+	virtual void Tick(float delta_time) override;
 
 	virtual ActorBase* TryMove(ActorBase* Actor, TVector offset) override;
 	void SpawnCircles();

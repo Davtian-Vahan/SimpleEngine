@@ -1,6 +1,5 @@
 #include "Agario/Agario.h"
-#include "Engine/GameManager.h"
-
+#include <Engine/GameManager/GameManager.h>
 
 int main()
 {

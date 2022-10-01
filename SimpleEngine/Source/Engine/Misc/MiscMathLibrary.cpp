@@ -27,8 +27,8 @@ int SimpleMath::rand_range(int min, int max)
 
 sf::Color SimpleMath::random_rgb()
 {
-	float r = rand_range(0, 38);
-	float g = rand_range(0, 235);
-	float b = rand_range(0, 48);
+	int r = rand_range(0, 38);
+	int g = rand_range(0, 235);
+	int b = rand_range(0, 48);
 	return sf::Color(r, g, b);
 }
