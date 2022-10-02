@@ -5,10 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <Engine/Misc/SimpleCore.h>
-
-/*
-	GameBase declaration
-*/
+#include <Engine/ActorBase/ActorBase.h>
 
 class GameBase
 {

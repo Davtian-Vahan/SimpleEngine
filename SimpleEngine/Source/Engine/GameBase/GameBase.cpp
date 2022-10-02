@@ -15,7 +15,7 @@ void GameBase::Draw()
 	render_window.clear(sf::Color(128, 128, 128));
 	for (ActorBase* Actor : Actors)
 	{
-		render_window.draw(*Actor);
+		render_window.draw(Actor->getDrawable());
 	}
 }
 
@@ -64,8 +64,6 @@ void GameBase::PossessToActor(ActorBase* actor)
 
 void GameBase::ForceMove(ActorBase* Actor, TVector offset)
 {
-	offset *= delta_time;
-
 	// Add the offset to current position and clamp it to screen 
 	TVector CachedPos = Actor->getPosition();
 	TVector ResultPos = GetPositionClamped(Actor->getPosition() + offset);
@@ -76,48 +74,47 @@ void GameBase::ForceMove(ActorBase* Actor, TVector offset)
 
 ActorBase* GameBase::TryMove(ActorBase* Actor, TVector offset)
 {
-	TVector CachedPos = Actor->getPosition();
+	TVector CachedPos = Actor->getPosition() + offset;
 	TVector ResultPos = GetPositionClamped(Actor->getPosition() + offset);
-
 	// Set new clamped position
 	Actor->setPosition(ResultPos);
 
-	// Check for collision 
-	CircleActor* MyActor = SimpleCast(CircleActor*, Actor);
-	CircleActor* CollidedActor = SimpleCast(CircleActor*, CollisionExists(Actor));
+	//// Check for collision 
+	//CircleActor* MyActor = SimpleCast(CircleActor*, Actor);
+	//CircleActor* CollidedActor = SimpleCast(CircleActor*, CollisionExists(Actor));
 
-	//If moving causes collision, reset movement
-	if (CollidedActor)
-	{
-		Actor->setPosition(CachedPos);
-		return CollidedActor;
-	}
+	////If moving causes collision, reset movement
+	//if (CollidedActor)
+	//{
+	//	Actor->setPosition(CachedPos);
+	//	return CollidedActor;
+	//}
 	return nullptr;
 }
 
 // Return if given actor collides with any other known actor
 ActorBase* GameBase::CollisionExists(ActorBase* Actor)
 {
-	// Checks for circle collision only for now
-	for (ActorBase* IterActor : Actors)
-	{
-		CircleActor* C1 = SimpleCast(CircleActor*, Actor);  
-		CircleActor* C2 = SimpleCast(CircleActor*, IterActor);
+	//// Checks for circle collision only for now
+	//for (ActorBase* IterActor : Actors)
+	//{
+	//	CircleActor* C1 = SimpleCast(CircleActor*, Actor);  
+	//	CircleActor* C2 = SimpleCast(CircleActor*, IterActor);
 
-		// no collision with itself
-		if (C1 == C2) { continue; }
+	//	// no collision with itself
+	//	if (C1 == C2) { continue; }
 
-		const TVector  center_a = C1->getPosition();
-		const TVector  center_b = C2->getPosition();
+	//	const TVector  center_a = C1->getPosition();
+	//	const TVector  center_b = C2->getPosition();
 
-		const float radius_a = C1->getRadius();
-		const float radius_b = C2->getRadius();
+	//	const float radius_a = C1->getRadius();
+	//	const float radius_b = C2->getRadius();
 
-		if (SimpleMath::circle_collision(center_a, center_b, radius_a, radius_b))
-		{
-			return C2;
-		}
-	}
+	//	if (SimpleMath::circle_collision(center_a, center_b, radius_a, radius_b))
+	//	{
+	//		return C2;
+	//	}
+	//}
 	return nullptr;
 }
 

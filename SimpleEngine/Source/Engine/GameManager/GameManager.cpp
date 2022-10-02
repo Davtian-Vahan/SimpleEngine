@@ -41,8 +41,6 @@ int GameManager::StartGame()
 		game_instance->Tick(delta_time);
 		game_instance->Draw();
 		game_instance->Display();
-		// Get time passed since start of the frame
-		delta_time = duration_cast<seconds>(system_clock::now() - frame_start_time).count();
 
 		#ifdef DEBUG
 		// Calculate and show fps value per 3 secs (to console for now)
@@ -62,6 +60,9 @@ int GameManager::StartGame()
 		#endif
 
 		++frame_count;
+
+		// Get time passed since start of the frame
+		delta_time = duration_cast<seconds>(system_clock::now() - frame_start_time).count();
 	}
 
 	#ifdef DEBUG

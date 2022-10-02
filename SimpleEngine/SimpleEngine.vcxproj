@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Agario\Agario.h" />
+    <ClInclude Include="Source\Agario\AgarioActor.h" />
     <ClInclude Include="Source\Engine\ActorBase\ActorBase.h" />
     <ClInclude Include="Source\Engine\GameBase\GameBase.h" />
     <ClInclude Include="Source\Engine\GameManager\GameManager.h" />

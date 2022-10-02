@@ -2,6 +2,7 @@
 #include <Engine/Misc/MiscMathLibrary.h>
 #include <chrono>
 #include <thread>
+#include <Agario/AgarioActor.h>
 
 AgarioGame::AgarioGame(size_t screen_height, size_t screen_width)
 	: GameBase(sf::VideoMode(screen_height, screen_width))
@@ -14,7 +15,7 @@ AgarioGame::AgarioGame()
 void AgarioGame::InitializeWorld()
 {
 	Super::InitializeWorld();
-	SpawnCircles();
+	SpawnSomething();
 }
 
 void AgarioGame::InputHandling()
@@ -43,90 +44,31 @@ void AgarioGame::InputHandling()
 		displace.y += speed_mutiplier;
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-	{
-		displace.y += speed_mutiplier;
-	}
-
-
 	TryMove(ControlledActor, displace);
 }
 
 void AgarioGame::Tick(float delta_time)
 {
 	Super::Tick(delta_time);
-
-	if (Actors.size() == 1)
-	{
-		ControlledActor->setFillColor(sf::Color::Red);
-	}
 }
 
-void AgarioGame::SpawnCircles()
+void AgarioGame::SpawnSomething()
 {
-	int circle_count = 20; 
-	for (int it = 0; it < circle_count; ++it)
+	// Spawn a test actor
+	AgarioActor* character = new AgarioActor();
+	for (int i = 0; i < 100; ++i)
 	{
-		CircleActor* circle = new CircleActor(15.f);
-		do
-		{
-			TVector position = GetRandScreenPosition();
-			circle->setPosition(GetPositionClamped(position));
-
-			float radius = 2 + rand() % 50;
-			circle->setRadius(radius);
-
-			// set origin to be center
-			circle->setOrigin(circle->getRadius(), circle->getRadius());
-
-		} while (CollisionExists(circle));
-
-		circle->setFillColor(SimpleMath::random_rgb());
-		SpawnActor(circle);
+		AgarioActor* temp_actor = new AgarioActor();
+		temp_actor->setPosition(GetRandScreenPosition());
+		// temp_actor->getDrawable().setColor(SimpleMath::random_rgb());
+		SpawnActor(temp_actor);
 	}
-
-	// Spawn my player character
-	float character_radius = 15;
-	CircleActor* character = new CircleActor(character_radius);
-
-	TVector position = GetRandScreenPosition();
-	character->setOrigin(character_radius, character_radius);
-	character->setPosition(GetPositionClamped(position));
-
 	SpawnActor(character);
-	PossessToActor(character);
+	ControlledActor = character;
 }
 
 ActorBase* AgarioGame::TryMove(ActorBase* Actor, TVector offset)
 {
-	CircleActor* HitActor = SimpleCast(CircleActor*, Super::TryMove(Actor, offset));
-	CircleActor* MyActor = SimpleCast(CircleActor*, Actor);
-
-	if (HitActor)
-	{
-		float HitActorRadius = HitActor->getRadius();
-		float MyActorRadius = MyActor->getRadius();
-		float NewRadius = HitActorRadius + MyActorRadius;
-		float AnimRadiusIter = MyActorRadius;
-
-		if (MyActorRadius <= HitActorRadius)
-		{
-			return HitActor;
-		}
-
-		// Eat collided actor
-		Actors.remove(HitActor);
-
-		// Play getting bigger animation
-		while (AnimRadiusIter < NewRadius)
-		{
-			MyActor->setRadius(AnimRadiusIter);
-			MyActor->setOrigin(AnimRadiusIter, AnimRadiusIter);
-			Draw();
-			Display();
-			AnimRadiusIter += 1.f;
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		}
-	}
-	return HitActor;
+	Super::ForceMove(Actor, offset);
+	return nullptr;
 }

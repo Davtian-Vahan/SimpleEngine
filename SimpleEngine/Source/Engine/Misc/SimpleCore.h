@@ -10,5 +10,4 @@
 #define SleepThis(ms) std::this_thread::sleep_for(std::chrono::milliseconds(ms))
 
 typedef sf::Vector2f	   TVector;
-typedef sf::Shape		   ActorBase;
 typedef sf::CircleShape    CircleActor;
