@@ -1,13 +1,8 @@
 #include "GameBase.h"
-
 #include <Engine/Misc/MiscMathLibrary.h>
 #include <chrono>
 #include <thread>
 #include <ctime>
-
-/*
-	Implementation of class SimpleEngine::GameBase
-*/
 
 // Draw each frame, called from game loop
 void GameBase::Draw()
@@ -15,7 +10,7 @@ void GameBase::Draw()
 	render_window.clear(sf::Color(128, 128, 128));
 	for (ActorBase* Actor : Actors)
 	{
-		render_window.draw(Actor->getDrawable());
+		render_window.draw(**Actor);
 	}
 }
 
@@ -65,13 +60,13 @@ void GameBase::PossessToActor(ActorBase* actor)
 void GameBase::ForceMove(ActorBase* Actor, TVector offset)
 {
 	// Add the offset to current position and clamp it to screen 
-	TVector CachedPos = Actor->getPosition();
-	TVector ResultPos = GetPositionClamped(Actor->getPosition() + offset);
+	const TVector ResultPos = GetPositionClamped(Actor->getPosition() + offset);
 
 	// Set new clamped position
 	Actor->setPosition(ResultPos);
 }
 
+// Tries to move if no collision, else return collided actor
 ActorBase* GameBase::TryMove(ActorBase* Actor, TVector offset)
 {
 	TVector CachedPos = Actor->getPosition() + offset;

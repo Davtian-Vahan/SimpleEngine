@@ -16,6 +16,7 @@ public:
 	virtual void Move_X(float displace);
 	virtual void Move_Y(float displace);
 
+	sf::Sprite& operator*()  { return sprite; }
 	sf::Sprite& getDrawable() { return sprite; }
 	TVector getPosition() { return sprite.getPosition(); }
 
