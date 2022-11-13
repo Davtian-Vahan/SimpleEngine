@@ -20,5 +20,7 @@ public:
 	sf::Sprite& getDrawable() { return sprite; }
 	TVector getPosition() { return sprite.getPosition(); }
 
+	float  getCollisionRadius() { return std::min(sprite.getGlobalBounds().width, sprite.getGlobalBounds().height) / 2; }
+
 	void setPosition(TVector pos);
 };

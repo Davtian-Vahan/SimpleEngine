@@ -56,7 +56,7 @@ void AgarioGame::SpawnSomething()
 {
 	// Spawn a test actor
 	AgarioActor* character = new AgarioActor();
-	for (int i = 0; i < 100; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		AgarioActor* temp_actor = new AgarioActor();
 		temp_actor->setPosition(GetRandScreenPosition());
@@ -69,6 +69,5 @@ void AgarioGame::SpawnSomething()
 
 ActorBase* AgarioGame::TryMove(ActorBase* Actor, TVector offset)
 {
-	Super::ForceMove(Actor, offset);
-	return nullptr;
+	return Super::TryMove(Actor, offset);
 }
