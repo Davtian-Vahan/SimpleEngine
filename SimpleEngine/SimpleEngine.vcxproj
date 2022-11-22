@@ -133,9 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Agario\AgarioActor.cpp" />
     <ClCompile Include="Source\Engine\ActorBase\ActorBase.cpp" />
     <ClCompile Include="Source\Engine\Collision\Collision.cpp" />
-    <ClCompile Include="Source\Engine\Delegate\Delegate.cpp" />
+    <ClCompile Include="Source\Engine\Delegate\Delegate.hpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Agario\Agario.cpp" />
     <ClCompile Include="Source\Engine\GameBase\GameBase.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Source\Agario\Agario.h" />
     <ClInclude Include="Source\Agario\AgarioActor.h" />
     <ClInclude Include="Source\Engine\ActorBase\ActorBase.h" />
+    <ClInclude Include="Source\Engine\ActorBase\IActorPhysics.h" />
     <ClInclude Include="Source\Engine\Collision\Collision.h" />
     <ClInclude Include="Source\Engine\Delegate\Delegate.h" />
     <ClInclude Include="Source\Engine\GameBase\GameBase.h" />

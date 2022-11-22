@@ -3,7 +3,7 @@
 #include <Engine/Misc/SimpleCore.h>
 #include <Engine/GameBase/GameBase.h>
 
-#define DEBUG
+//#define DEBUG
 using namespace std::chrono;
 
 GameManager::GameManager(GameBase* in_game_ref)
@@ -45,7 +45,7 @@ int GameManager::StartGame()
 		#ifdef DEBUG
 		// Calculate and show fps value per 3 secs (to console for now)
 		time_point fps_end_time = system_clock::now();
-		duration<double> dur = duration_cast<seconds>(fps_end_time - fps_start_time);
+		duration<double> dur = duration_cast<milliseconds>(fps_end_time - fps_start_time);
 		if (dur.count() >= 1.0)
 		{
 			// calculate fps
@@ -62,7 +62,7 @@ int GameManager::StartGame()
 		++frame_count;
 
 		// Get time passed since start of the frame
-		delta_time = duration_cast<seconds>(system_clock::now() - frame_start_time).count();
+		delta_time = duration_cast<milliseconds>(system_clock::now() - frame_start_time).count();
 	}
 
 	#ifdef DEBUG

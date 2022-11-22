@@ -22,29 +22,22 @@ void AgarioGame::InputHandling()
 {
 	Super::InputHandling();
 
-	TVector displace{ 0.f, 0.f };
-	float speed_mutiplier = 0.1;
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		displace.x -= speed_mutiplier;
+		ControlledActor->Move_X(-1.f * ControlledActor->Acceleration);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		displace.x += speed_mutiplier;
+		ControlledActor->Move_X(ControlledActor->Acceleration);
 	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		displace.y -= speed_mutiplier;
-	}
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		displace.y += speed_mutiplier;
+		ControlledActor->Move_Y(ControlledActor->Acceleration);
 	}
-
-	TryMove(ControlledActor, displace);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		ControlledActor->Move_Y(-1.f * ControlledActor->Acceleration);
+	}
 }
 
 void AgarioGame::Tick(float delta_time)
@@ -56,18 +49,12 @@ void AgarioGame::SpawnSomething()
 {
 	// Spawn a test actor
 	AgarioActor* character = new AgarioActor();
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		AgarioActor* temp_actor = new AgarioActor();
 		temp_actor->setPosition(GetRandScreenPosition());
-		// temp_actor->getDrawable().setColor(SimpleMath::random_rgb());
 		SpawnActor(temp_actor);
 	}
 	SpawnActor(character);
 	ControlledActor = character;
-}
-
-ActorBase* AgarioGame::TryMove(ActorBase* Actor, TVector offset)
-{
-	return Super::TryMove(Actor, offset);
 }

@@ -1,26 +1,71 @@
 #pragma once
-#include <SFML/Graphics/Shape.hpp>
-#include <SFML/Graphics/CircleShape.hpp>
+#include "SFML/Graphics.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Sprite.hpp"
-#include "../Misc/SimpleCore.h"
+#include <Engine/Misc/SimpleCore.h>
 
-class ActorBase 
+/*
+	Base class for all SimpleEngine Actors
+*/
+
+class Actor : public sf::Drawable
 {
+	friend class GameBase;
+	typedef Actor* (Actor::*CollisionPredicate)(Actor*);
+
+	// Temporary friend
+	friend class AgarioGame;
+
 protected:
-	sf::Texture texture;
-	sf::Sprite sprite;
+	// Texture sprite and collision type callable
+	sf::Texture * texture;
+	sf::Sprite  * sprite;
+	CollisionPredicate CollisionFunc = nullptr;
 
 	bool SetTexture(const char * file_path);
+
+protected:
+	// Physics and movement members
+	float   MaxSpeed;
+	float   Acceleration;
+	float   Weight;
+	TVector Velocity;
+	TVector CurrentPosition;
+	TVector DesiredPosition;
+
 public:
+	// Prevent bitwise copying
+	Actor(const Actor&) = delete;
+	void operator=(const Actor&) = delete;
+	
+	// Default Constructor / Destructor
+	Actor();
+	~Actor();
+
+	virtual void Tick(float delta_time);
+
+	// For SFML to consider this class as sf::Drawable
+	virtual void draw(sf::RenderTarget& target, sf:: RenderStates states) const;
+
+	// Handle 2D movement
 	virtual void Move_X(float displace);
 	virtual void Move_Y(float displace);
 
-	sf::Sprite& operator*()  { return sprite; }
-	sf::Sprite& getDrawable() { return sprite; }
-	TVector getPosition() { return sprite.getPosition(); }
 
-	float  getCollisionRadius() { return std::min(sprite.getGlobalBounds().width, sprite.getGlobalBounds().height) / 2; }
 
 	void setPosition(TVector pos);
+	void setVelocity(const TVector& InVel);
+
+	// Collision functions TODO: Move these somewhere smarter
+	Actor* CheckCircleCollision(Actor* C2);
+
+	// Getters 
+	inline TVector     getPosition() const { return sprite->getPosition(); }
+	inline TVector     getVelocity() const { return Velocity; }
+
+	// Return sprite global dimensions (considering transform)
+	inline TVector getSpriteDimensions() const
+	{
+		return TVector(sprite->getGlobalBounds().height, sprite->getGlobalBounds().width);
+	}
 };

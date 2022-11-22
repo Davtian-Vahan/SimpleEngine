@@ -19,9 +19,10 @@ public:
 
 protected:
 	// Game logic functions
-	void SpawnActor(ActorBase* actor);
-	void DestroyActor(ActorBase* actor);
-	void PossessToActor(ActorBase* actor);
+	void SpawnActor(Actor* actor);
+	void DestroyActor(Actor* actor);
+	void PossessToActor(Actor* actor);
+	void DisplaceActors();
 
 public:
 	// Constructor & Destructor
@@ -35,14 +36,11 @@ public:
 
 public:
 	// Movement and collision related functions
-	// Force a move to given position, even if blocked
-	void ForceMove(ActorBase* Actor, TVector new_pos);
-
 	// Tries to move, returns blocker if failed
-	virtual ActorBase* TryMove(ActorBase* Actor, TVector new_pos);
+	virtual Actor* TryMove(Actor* Actor, TVector new_pos);
 
 	// Returns the collided actor to the given Actor
-	ActorBase* CollisionExists(ActorBase* Actor);
+	Actor* CollisionExists(Actor* Actor);
 
 	// Clamp a given position bounded to the screen width/height
 	TVector GetPositionClamped(const TVector& new_pos);
@@ -64,8 +62,8 @@ protected:
 	float delta_time;
 
 	// Spawned actors
-	std::list<ActorBase*> Actors;
+	std::list<Actor*> Actors;
 
 	// Actor thats controlled by player
-	ActorBase* ControlledActor = nullptr;
+	Actor* ControlledActor = nullptr;
 };

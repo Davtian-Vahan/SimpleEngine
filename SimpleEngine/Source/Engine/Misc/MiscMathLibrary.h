@@ -14,7 +14,7 @@ public:
 	static float vector_distance(const TVector& vec_1, const TVector&vec_2);
 
 	// Returns given float squared
-	static float square(const float &x) { return x * x; }
+	static float square(const float& x) { return x * x; }
 
 	// Clamps a value to a given range
 	static float clamp(float x, float range_a, float range_b);

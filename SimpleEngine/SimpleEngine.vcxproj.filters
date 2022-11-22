@@ -36,7 +36,10 @@
     <ClCompile Include="Source\Engine\Collision\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Delegate\Delegate.cpp">
+    <ClCompile Include="Source\Engine\Delegate\Delegate.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Agario\AgarioActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\Delegate\Delegate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\ActorBase\IActorPhysics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

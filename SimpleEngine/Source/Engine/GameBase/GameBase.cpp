@@ -8,9 +8,9 @@
 void GameBase::Draw()
 {
 	render_window.clear(sf::Color(128, 128, 128));
-	for (ActorBase* Actor : Actors)
+	for (Actor* Actor : Actors)
 	{
-		render_window.draw(**Actor);
+		render_window.draw(*Actor);
 	}
 }
 
@@ -39,75 +39,70 @@ void GameBase::Tick(float delta_time)
 	// Time related member updates go here
 	// ...........
 	this->delta_time = delta_time;
+	DisplaceActors();
 }
 
-void GameBase::SpawnActor(ActorBase* actor)
+void GameBase::SpawnActor(Actor* actor)
 {
 	Actors.push_back(actor);
 }
 
-void GameBase::DestroyActor(ActorBase* actor)
+void GameBase::DestroyActor(Actor* actor)
 {
 	Actors.remove(actor);
 	delete actor;
 }
 
-void GameBase::PossessToActor(ActorBase* actor)
+void GameBase::PossessToActor(Actor* actor)
 {
 	ControlledActor = actor;
 }
 
-void GameBase::ForceMove(ActorBase* Actor, TVector offset)
+void GameBase::DisplaceActors()
 {
-	// Add the offset to current position and clamp it to screen 
-	const TVector ResultPos = GetPositionClamped(Actor->getPosition() + offset);
-
-	// Set new clamped position
-	Actor->setPosition(ResultPos);
+	for (Actor* IterActor : Actors)
+	{
+		TryMove(IterActor, IterActor->DesiredPosition);
+	}
 }
 
 // Tries to move if no collision, else return collided actor
-ActorBase* GameBase::TryMove(ActorBase* Actor, TVector offset)
+Actor* GameBase::TryMove(Actor* InActor, TVector PossiblePos)
 {
-	TVector CachedPos = Actor->getPosition();
-	TVector ResultPos = GetPositionClamped(Actor->getPosition() + offset);
+	TVector CachedPos = InActor->getPosition();
 	// Set new clamped position
-	Actor->setPosition(ResultPos);
+	InActor->setPosition(PossiblePos);
 
 	// Check for collision 
-	ActorBase* CollidedActor = CollisionExists(Actor);
+	Actor* CollidedActor = CollisionExists(InActor);
 
 	//If moving causes collision, reset movement
 	if (CollidedActor)
 	{
-		Actor->setPosition(CachedPos);
+		InActor->setPosition(CachedPos);
 		return CollidedActor;
 	}
 	return nullptr;
 }
 
 // Return if given actor collides with any other known actor
-ActorBase* GameBase::CollisionExists(ActorBase* Actor)
+Actor* GameBase::CollisionExists(Actor* InActor)
 {
 	// Checks for circle collision only for now
-	for (ActorBase* IterActor : Actors)
+	for (Actor* IterActor : Actors)
 	{
-		// 
-		ActorBase* C1 = Actor;  
-		ActorBase* C2 = IterActor;
-
-		// no collision with itself
+		Actor* C1 = InActor;  
+		Actor* C2 = IterActor;
+		// No collision with itself
 		if (C1 == C2) { continue; }
-
-		const TVector  center_a = C1->getPosition();
-		const TVector  center_b = C2->getPosition();
-
-		const float radius_a = C1->getCollisionRadius();
-		const float radius_b = C2->getCollisionRadius();
-
-		if (SimpleMath::circle_collision(center_a, center_b, radius_a, radius_b))
+		// Check for collision with the appropriate collision predicate 
+		if (C1->CollisionFunc)
 		{
-			return C2;
+			Actor* CollidedActor = (C1->*(C1->CollisionFunc))(C2);
+			if (CollidedActor)
+			{
+				return CollidedActor;
+			}
 		}
 	}
 	return nullptr;
@@ -142,7 +137,7 @@ GameBase::GameBase(const sf::VideoMode& in_videomode)
 // Destructor, release memory of actors
 GameBase::~GameBase()
 {
-	for (const ActorBase* Actor : Actors)
+	for (const Actor* Actor : Actors)
 	{
 		delete Actor;
 	}
