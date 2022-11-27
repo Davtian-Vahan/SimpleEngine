@@ -11,7 +11,10 @@ AgarioActor::AgarioActor()
 	// Open texture asset for this actor
 	bool Ok = 
 	SetTexture("C:\\Users\\jedav\\Desktop\\SimpleEngine\\SimpleEngine\\Source\\Agario\\sample_texture.png");
-	if (!Ok) SimpleLogError("Failed to open asset.");
+	if (!Ok) SE_LOG("Failed to open asset.");
+
+	//
+	Acceleration = 5.f;
 
 	// Set scale and origin for this actors texture
 	sprite->setScale(TVector(0.5, 0.5));

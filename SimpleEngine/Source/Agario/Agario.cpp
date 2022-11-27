@@ -4,9 +4,6 @@
 #include <thread>
 #include <Agario/AgarioActor.h>
 
-AgarioGame::AgarioGame(size_t screen_height, size_t screen_width)
-	: GameBase(sf::VideoMode(screen_height, screen_width))
-{}
 
 AgarioGame::AgarioGame()
 	: GameBase(sf::VideoMode(1920.f, 1080.f))
@@ -15,29 +12,17 @@ AgarioGame::AgarioGame()
 void AgarioGame::InitializeWorld()
 {
 	Super::InitializeWorld();
+
+	// Bind event functions
+	Super::onKeyPressed.AddRaw(this, &AgarioGame::onKeyPressed);
+	Super::onKeyReleased.AddRaw(this, &AgarioGame::onKeyReleased);
+
 	SpawnSomething();
 }
 
 void AgarioGame::InputHandling()
 {
 	Super::InputHandling();
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		ControlledActor->Move_X(-1.f * ControlledActor->Acceleration);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		ControlledActor->Move_X(ControlledActor->Acceleration);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		ControlledActor->Move_Y(ControlledActor->Acceleration);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		ControlledActor->Move_Y(-1.f * ControlledActor->Acceleration);
-	}
 }
 
 void AgarioGame::Tick(float delta_time)
@@ -57,4 +42,51 @@ void AgarioGame::SpawnSomething()
 	}
 	SpawnActor(character);
 	ControlledActor = character;
+}
+
+void AgarioGame::onKeyPressed(sf::Event & tickEvent)
+{
+	TVector UpdateVelocity;
+
+	if (tickEvent.key.code == sf::Keyboard::A)
+	{
+		ControlledActor->Move_X(-ControlledActor->Acceleration);
+	}
+	if (tickEvent.key.code == sf::Keyboard::D)
+	{
+		ControlledActor->Move_X(ControlledActor->Acceleration);
+	}
+
+	if (tickEvent.key.code == sf::Keyboard::W)
+	{
+		ControlledActor->Move_Y(-ControlledActor->Acceleration);
+	}
+	if (tickEvent.key.code == sf::Keyboard::S)
+	{
+		ControlledActor->Move_Y(ControlledActor->Acceleration);
+	}
+}
+
+void AgarioGame::onKeyReleased(sf::Event& tickEvent)
+{
+	TVector UpdateVelocity;
+
+	if (tickEvent.key.code == sf::Keyboard::A)
+	{
+		ControlledActor->Move_X(0);
+	}
+	if (tickEvent.key.code == sf::Keyboard::D)
+	{
+		ControlledActor->Move_X(0);
+	}
+
+	if (tickEvent.key.code == sf::Keyboard::W)
+	{
+		ControlledActor->Move_Y(0);
+
+	}
+	if (tickEvent.key.code == sf::Keyboard::S)
+	{
+		ControlledActor->Move_Y(0);
+	}
 }

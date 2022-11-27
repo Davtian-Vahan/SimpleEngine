@@ -1,19 +1,10 @@
 #include "GameManager.h"
-
 #include <Engine/Misc/SimpleCore.h>
 #include <Engine/GameBase/GameBase.h>
 
-//#define DEBUG
 using namespace std::chrono;
 
-GameManager::GameManager(GameBase* in_game_ref)
-	: game_instance(in_game_ref), total_elapsed_time_s(0.f), debug_show_fps(true)
-{}
-
-GameManager::~GameManager()
-{
-	delete game_instance;
-}
+#define SHOW_FPS
 
 // Start main loop
 int GameManager::StartGame()
@@ -21,55 +12,57 @@ int GameManager::StartGame()
 	srand(time(0));
 
 	// Time/frame related variables
-	time_point frame_start_time = system_clock::now();
-	time_point fps_start_time = system_clock::now();
-	float  delta_time  = 0.f; 
-	double fps_value   = 0.f;
-	int    frame_count = 0;
+	sf::Clock clock;
+	sf::Clock clockFPS;
+	double fps_value = 0.f;
+	long frame_count = 0;
 
 	// Initialize game world 
 	game_instance->InitializeWorld();
 
+	// Enable vsync
+	//game_instance->ToggleVsync(true);
+
 	// Start game loop
 	while (game_instance->bGameRunning)
 	{
-		// Get current time
-		frame_start_time = system_clock::now();
+		// Get time elapsed since last call to restart()
+		float dt = clock.restart().asSeconds();
 
 		// Main logical functions
 		game_instance->InputHandling();
-		game_instance->Tick(delta_time);
+		game_instance->Tick(dt);
 		game_instance->Draw();
 		game_instance->Display();
 
-		#ifdef DEBUG
 		// Calculate and show fps value per 3 secs (to console for now)
-		time_point fps_end_time = system_clock::now();
-		duration<double> dur = duration_cast<milliseconds>(fps_end_time - fps_start_time);
-		if (dur.count() >= 1.0)
 		{
-			// calculate fps
-			fps_value = frame_count / dur.count();
-
-			// reset timer and frame count
-			frame_count = 0;
-			fps_start_time = system_clock::now();
+			#ifdef SHOW_FPS
+			float duration = clockFPS.getElapsedTime().asSeconds();
+			if (duration >= 1.0)
+			{
+				// Calculate FPS and reset frame counter
+				fps_value = frame_count / clockFPS.restart().asSeconds();
+				frame_count = 0;
+			}
+			printf("FPS %d\n", (int)fps_value);
+			#endif
 		}
 
-		printf("FPS %f\n", fps_value);
-		#endif
-
 		++frame_count;
-
-		// Get time passed since start of the frame
-		delta_time = duration_cast<milliseconds>(system_clock::now() - frame_start_time).count();
 	}
 
-	#ifdef DEBUG
-	printf("Session ended");
-	#endif
+	SE_LOG("Session Ended.");
 
 	// Catch game related errors here
-	// ...returns 0 for now
 	return 0;
+}
+
+GameManager::GameManager(GameBase* in_game_ref)
+	: game_instance(in_game_ref)
+{}
+
+GameManager::~GameManager()
+{
+	delete game_instance;
 }

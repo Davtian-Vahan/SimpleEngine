@@ -7,7 +7,7 @@
 // Set null collision by default
 Actor::Actor()
 	: CollisionFunc(nullptr), Acceleration(0.f),
-	  Weight(0.f), MaxSpeed(0.f)
+	Weight(0.f), MaxSpeed(0.f)
 {
 	try
 	{
@@ -16,7 +16,7 @@ Actor::Actor()
 	}
 	catch (std::bad_alloc&)
 	{
-		SimpleLogError("Class Actor: failed to allocate sprite or texture.");
+		SE_LOG("Class Actor: failed to allocate sprite or texture.");
 		exit(EXIT_FAILURE);
 	}
 }
@@ -31,9 +31,11 @@ Actor::~Actor()
 // Called every frame
 void Actor::Tick(float delta_time)
 {
-	setPosition(CurrentPosition);
+	//setPosition(CurrentPosition);
 	// Cache a desired position for main game class to grant
 	DesiredPosition = CurrentPosition + Velocity * delta_time;
+
+	//SE_LOG("Actor delta_time %f: \n", delta_time);
 }
 
 // Overriden from sf::Drawable
@@ -45,36 +47,13 @@ void Actor::draw(sf::RenderTarget& target, sf::RenderStates states) const
 // Self expl
 void Actor::Move_X(float displace)
 {
-	float& x = Velocity.x;
-	float& y = Velocity.y;
-
-	if (std::abs(x) < MaxSpeed)
-	{
-		x += displace;
-		printf("Displace x : %f\n", x);
-		return;
-	}
-	
-	x = 0;
-	y = 0;
+	Velocity.x = displace;
 }
 
 // Self expl
 void Actor::Move_Y(float displace)
 {
-	float& x = Velocity.x;
-	float& y = Velocity.y;
-
-	if (std::abs(y) < MaxSpeed)
-	{
-
-		y += displace;
-		printf("Displace y : %f\n", y);
-		return;
-	}
-
-	x = 0;
-	y = 0;
+	Velocity.y = displace;
 }
 
 // Set texture for the sprite from a given file path
@@ -101,13 +80,13 @@ void Actor::setVelocity(const TVector& InVel)
 }
 
 // Circle collision callback
-Actor* Actor::CheckCircleCollision(Actor * C2)
+Actor* Actor::CheckCircleCollision(Actor* C2)
 {
 	const Actor* C1 = this;
 	const float radius_a = C1->getSpriteDimensions().y / 2.f;
 	const float radius_b = C2->getSpriteDimensions().y / 2.f;
-	const TVector  center_a = C1->getPosition() ;
-	const TVector  center_b = C2->getPosition() ;
+	const TVector center_a = C1->getPosition();
+	const TVector center_b = C2->getPosition();
 	if (SimpleMath::circle_collision(center_a, center_b, radius_a, radius_b))
 	{
 		return C2;

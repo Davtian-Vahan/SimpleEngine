@@ -1,4 +1,5 @@
 #pragma once
+
 #include "SFML/Graphics.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Sprite.hpp"
@@ -8,7 +9,7 @@
 	Base class for all SimpleEngine Actors
 */
 
-class Actor : public sf::Drawable
+class Actor : public sf::Drawable, public IForbidCopy
 {
 	friend class GameBase;
 	typedef Actor* (Actor::*CollisionPredicate)(Actor*);
@@ -34,14 +35,11 @@ protected:
 	TVector DesiredPosition;
 
 public:
-	// Prevent bitwise copying
-	Actor(const Actor&) = delete;
-	void operator=(const Actor&) = delete;
-	
 	// Default Constructor / Destructor
 	Actor();
 	~Actor();
 
+	// Called every frame for this actor
 	virtual void Tick(float delta_time);
 
 	// For SFML to consider this class as sf::Drawable
@@ -51,15 +49,14 @@ public:
 	virtual void Move_X(float displace);
 	virtual void Move_Y(float displace);
 
-
-
+	// Setters for velocity and position
 	void setPosition(TVector pos);
 	void setVelocity(const TVector& InVel);
 
 	// Collision functions TODO: Move these somewhere smarter
 	Actor* CheckCircleCollision(Actor* C2);
 
-	// Getters 
+	// Getters for velocity and position
 	inline TVector     getPosition() const { return sprite->getPosition(); }
 	inline TVector     getVelocity() const { return Velocity; }
 

@@ -5,7 +5,6 @@
 class AgarioGame : public GameBase
 {
 public:
-	AgarioGame(size_t screen_height, size_t screen_width);
 	AgarioGame();
 
 	virtual void InitializeWorld() override;
@@ -13,6 +12,9 @@ public:
 	virtual void Tick(float delta_time) override;
 
 	void SpawnSomething();
+
+	void onKeyPressed(sf::Event& );
+	void onKeyReleased(sf::Event& );
 
 	typedef GameBase Super;
 };

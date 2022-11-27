@@ -6,10 +6,17 @@
 
 #include <Engine/Misc/SimpleCore.h>
 #include <Engine/ActorBase/ActorBase.h>
+#include <Engine/Delegate/Delegate.h>
 
-class GameBase
+class GameBase : public IForbidCopy
 {
 	friend class GameManager;
+
+protected:
+	// Input handler delegates
+	MulticastDelegate<sf::Event&> onKeyPressed;
+	MulticastDelegate<sf::Event&> onKeyReleased;
+
 public:
 	// Game loop functions
 	virtual void Draw();
@@ -22,17 +29,12 @@ protected:
 	void SpawnActor(Actor* actor);
 	void DestroyActor(Actor* actor);
 	void PossessToActor(Actor* actor);
-	void DisplaceActors();
+	void TickActors(float);
 
 public:
 	// Constructor & Destructor
 	explicit GameBase(const sf::VideoMode& in_display);
-	~GameBase();
-
-public:
-	// Delete copy functions
-	GameBase(const GameBase&) = delete;
-	void operator=(const GameBase&) = delete;
+	virtual ~GameBase();
 
 public:
 	// Movement and collision related functions
@@ -52,6 +54,8 @@ public:
 public:
 	// Called from outside the SimpleEngine, to start a game instance loop
 	virtual void InitializeWorld();
+
+	void ToggleVsync(bool);
 
 protected:
 	// Handle to main render window, video settings

@@ -142,6 +142,7 @@
     <ClCompile Include="Source\Engine\GameBase\GameBase.cpp" />
     <ClCompile Include="Source\Engine\GameManager\GameManager.cpp" />
     <ClCompile Include="Source\Engine\Misc\MiscMathLibrary.cpp" />
+    <ClCompile Include="Source\T_Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Agario\Agario.h" />

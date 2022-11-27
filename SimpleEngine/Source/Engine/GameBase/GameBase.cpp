@@ -30,16 +30,28 @@ void GameBase::InputHandling()
 		{
 			render_window.close();
 			bGameRunning = false;
+			break;
+		}
+
+		// Broadcast key pressed and released delegates
+		if (poll_event.type == sf::Event::KeyPressed)
+		{
+			onKeyPressed.Broadcast(poll_event);
+		}
+
+		if (poll_event.type == sf::Event::KeyReleased)
+		{
+			onKeyReleased.Broadcast(poll_event);
 		}
 	}
 }
 
-void GameBase::Tick(float delta_time)
+void GameBase::Tick(float dt)
 {
 	// Time related member updates go here
 	// ...........
-	this->delta_time = delta_time;
-	DisplaceActors();
+	this->delta_time = dt;
+	TickActors(dt);
 }
 
 void GameBase::SpawnActor(Actor* actor)
@@ -58,10 +70,11 @@ void GameBase::PossessToActor(Actor* actor)
 	ControlledActor = actor;
 }
 
-void GameBase::DisplaceActors()
+void GameBase::TickActors(float dt)
 {
 	for (Actor* IterActor : Actors)
 	{
+		IterActor->Tick(dt);
 		TryMove(IterActor, IterActor->DesiredPosition);
 	}
 }
@@ -126,6 +139,11 @@ TVector GameBase::GetRandScreenPosition()
 void GameBase::InitializeWorld()
 {
 	bGameRunning = true;
+}
+
+void GameBase::ToggleVsync(bool new_vsync)
+{
+	render_window.setVerticalSyncEnabled(new_vsync);
 }
 
 // Constructor
