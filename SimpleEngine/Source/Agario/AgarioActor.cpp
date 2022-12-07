@@ -14,7 +14,7 @@ AgarioActor::AgarioActor()
 	if (!Ok) SE_LOG("Failed to open asset.");
 
 	//
-	Acceleration = 5.f;
+	Acceleration = 1000.f;
 
 	// Set scale and origin for this actors texture
 	sprite->setScale(TVector(0.5, 0.5));

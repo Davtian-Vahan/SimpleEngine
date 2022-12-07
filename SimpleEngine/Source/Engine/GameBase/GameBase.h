@@ -1,6 +1,6 @@
 #pragma once
 // Define SFML to be linked as a static library with the exe
-#define SFML_STATIC 
+//#define SFML_STATIC 
 #include <list>
 #include <SFML/Graphics.hpp>
 
