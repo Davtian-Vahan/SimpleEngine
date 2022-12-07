@@ -3,6 +3,8 @@
 // Include vector class 
 #include "SimpleCore.h"
 
+#define EARTH_GRAVITY 9.807
+
 // Static function class, for misc math functions
 class SimpleMath
 {
@@ -24,4 +26,14 @@ public:
 
 	// 
 	static sf::Color random_rgb();
+
+	//
+	template <class T>
+	static T RandRange(T Min, T Max);
 };
+
+template<class T>
+inline T SimpleMath::RandRange(T Min, T Max)
+{
+	return Min + (T)rand() / ((T)RAND_MAX / (T)(Max - Min));
+}

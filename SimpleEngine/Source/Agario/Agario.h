@@ -11,7 +11,7 @@ public:
 	virtual void InputHandling() override;
 	virtual void Tick(float delta_time) override;
 
-	void SpawnSomething();
+	void SpawnRandomActors();
 
 	void onKeyPressed(sf::Event& );
 	void onKeyReleased(sf::Event& );

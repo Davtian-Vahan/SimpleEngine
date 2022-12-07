@@ -7,7 +7,7 @@
 // Set null collision by default
 Actor::Actor()
 	: CollisionFunc(nullptr), Acceleration(0.f),
-	Weight(0.f), MaxSpeed(0.f)
+	Weight(0.f), MaxSpeed(0.f), bObeyGravity(false), GravityAcceleration(100.f)
 {
 	try
 	{
@@ -34,6 +34,11 @@ void Actor::Tick(float delta_time)
 	//setPosition(CurrentPosition);
 	// Cache a desired position for main game class to grant
 	DesiredPosition = CurrentPosition + Velocity * delta_time;
+
+	if (bObeyGravity)
+	{
+		DesiredPosition.y += delta_time * GravityAcceleration;
+	}
 
 	//SE_LOG("Actor delta_time %f: \n", delta_time);
 }

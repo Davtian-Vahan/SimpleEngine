@@ -1,4 +1,5 @@
 #include "AgarioActor.h"
+#include "Engine/Misc/MiscMathLibrary.h"
 
 void AgarioActor::Tick(float delta_time)
 {
@@ -15,7 +16,8 @@ AgarioActor::AgarioActor()
 
 	//
 	Acceleration = 1000.f;
-
+	bObeyGravity = true;
+	GravityAcceleration = 150.f;
 	// Set scale and origin for this actors texture
 	sprite->setScale(TVector(0.5, 0.5));
 	sprite->setOrigin(sprite->getGlobalBounds().height, sprite->getGlobalBounds().width);

@@ -33,6 +33,7 @@ protected:
 
 public:
 	// Constructor & Destructor
+	explicit GameBase(const int VideoWidth, const int VideoHeight);
 	explicit GameBase(const sf::VideoMode& in_display);
 	virtual ~GameBase();
 
@@ -58,9 +59,9 @@ public:
 	void ToggleVsync(bool);
 
 protected:
-	// Handle to main render window, video settings
-	sf::RenderWindow render_window;
+	// Handle to main render window, video settings (Order of initialization is important)
 	sf::VideoMode    video_mode;
+	sf::RenderWindow render_window;
 
 	bool bGameRunning;
 	float delta_time;

@@ -84,7 +84,7 @@ Actor* GameBase::TryMove(Actor* InActor, TVector PossiblePos)
 {
 	TVector CachedPos = InActor->getPosition();
 	// Set new clamped position
-	InActor->setPosition(PossiblePos);
+	InActor->setPosition(GetPositionClamped(PossiblePos));
 
 	// Check for collision 
 	Actor* CollidedActor = CollisionExists(InActor);
@@ -127,6 +127,7 @@ TVector GameBase::GetPositionClamped(const TVector& new_pos)
 	TVector res_pos = new_pos;
 	res_pos.x = SimpleMath::clamp(res_pos.x, 0, video_mode.width);
 	res_pos.y = SimpleMath::clamp(res_pos.y, 0, video_mode.height);
+
 	return res_pos;
 }
 
@@ -146,10 +147,10 @@ void GameBase::ToggleVsync(bool new_vsync)
 	render_window.setVerticalSyncEnabled(new_vsync);
 }
 
-// Constructor
-GameBase::GameBase(const sf::VideoMode& in_videomode)
-	: render_window(in_videomode, ""), video_mode(in_videomode),
-	  bGameRunning(false), delta_time(0.f)
+// Only init constructor for now, feed it video dimensions
+GameBase::GameBase(const int VideoWidth, const int VideoHeight)
+	: render_window(video_mode, ""), video_mode(VideoWidth, VideoHeight),
+	  bGameRunning(false),			 delta_time(0.f)
 {}
 
 // Destructor, release memory of actors

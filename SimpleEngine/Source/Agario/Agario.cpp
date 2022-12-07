@@ -1,12 +1,9 @@
 #include "Agario.h"
-#include <Engine/Misc/MiscMathLibrary.h>
-#include <chrono>
-#include <thread>
 #include <Agario/AgarioActor.h>
-
+#include <Engine/Misc/MiscMathLibrary.h>
 
 AgarioGame::AgarioGame()
-	: GameBase(sf::VideoMode(1920.f, 1080.f))
+	: Super(1920.f, 1080.f)
 {}
 
 void AgarioGame::InitializeWorld()
@@ -17,7 +14,13 @@ void AgarioGame::InitializeWorld()
 	Super::onKeyPressed.AddRaw(this, &AgarioGame::onKeyPressed);
 	Super::onKeyReleased.AddRaw(this, &AgarioGame::onKeyReleased);
 
-	SpawnSomething();
+	// Spawn a main character
+	AgarioActor* character = new AgarioActor();
+	SpawnActor(character);
+	ControlledActor = character;
+
+	// Spawn some other random actors
+	SpawnRandomActors();
 }
 
 void AgarioGame::InputHandling()
@@ -30,18 +33,18 @@ void AgarioGame::Tick(float delta_time)
 	Super::Tick(delta_time);
 }
 
-void AgarioGame::SpawnSomething()
+void AgarioGame::SpawnRandomActors()
 {
-	// Spawn a test actor
-	AgarioActor* character = new AgarioActor();
-	for (int i = 0; i < 3; ++i)
+	TVector PrevPos;
+	// Spawn 5 random actors
+	for (int i = 0; i < 5; ++i)
 	{
-		AgarioActor* temp_actor = new AgarioActor();
-		temp_actor->setPosition(GetRandScreenPosition());
-		SpawnActor(temp_actor);
+		AgarioActor* RandActor = new AgarioActor();
+		TVector NewPosition(PrevPos.x + 400.f, PrevPos.y);
+		RandActor->setPosition(NewPosition);
+		SpawnActor(RandActor);
+		PrevPos = NewPosition;
 	}
-	SpawnActor(character);
-	ControlledActor = character;
 }
 
 void AgarioGame::onKeyPressed(sf::Event & tickEvent)

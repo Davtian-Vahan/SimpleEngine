@@ -34,6 +34,9 @@ protected:
 	TVector CurrentPosition;
 	TVector DesiredPosition;
 
+	bool bObeyGravity;
+	float GravityAcceleration;
+
 public:
 	// Default Constructor / Destructor
 	Actor();
