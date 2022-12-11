@@ -45,7 +45,7 @@ int GameManager::StartGame()
 				fps_value = frame_count / clockFPS.restart().asSeconds();
 				frame_count = 0;
 			}
-			printf("FPS %d\n", (int)fps_value);
+			//printf("FPS %d\n", (int)fps_value);
 			#endif
 		}
 

@@ -156,6 +156,7 @@
     <ClInclude Include="Source\Engine\GameBase\GameBase.h" />
     <ClInclude Include="Source\Engine\GameManager\GameManager.h" />
     <ClInclude Include="Source\Engine\Misc\MiscMathLibrary.h" />
+    <ClInclude Include="Source\Engine\Misc\Paths.h" />
     <ClInclude Include="Source\Engine\Misc\SimpleCore.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

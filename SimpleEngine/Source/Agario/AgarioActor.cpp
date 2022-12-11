@@ -1,5 +1,6 @@
 #include "AgarioActor.h"
 #include "Engine/Misc/MiscMathLibrary.h"
+#include "Engine/Misc/Paths.h"
 
 void AgarioActor::Tick(float delta_time)
 {
@@ -10,8 +11,9 @@ void AgarioActor::Tick(float delta_time)
 AgarioActor::AgarioActor()
 {
 	// Open texture asset for this actor
+	std::string TexturePath = Paths::source_dir() + "\\Agario\\sample_texture.png";
 	bool Ok = 
-	SetTexture("C:\\Users\\jedav\\Desktop\\SimpleEngine\\SimpleEngine\\Source\\Agario\\sample_texture.png");
+	SetTexture(TexturePath.c_str());
 	if (!Ok) SE_LOG("Failed to open asset.");
 
 	GravityAcceleration = 150.f;

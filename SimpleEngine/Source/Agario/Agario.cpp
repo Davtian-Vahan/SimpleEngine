@@ -21,7 +21,6 @@ void AgarioGame::InitializeWorld()
 
 	// Spawn some other random actors
 	SpawnRandomActors();
-
 }
 
 void AgarioGame::InputHandling()
@@ -32,8 +31,6 @@ void AgarioGame::InputHandling()
 void AgarioGame::Tick(float delta_time)
 {
 	Super::Tick(delta_time);
-
-	//SpawnActor(new AgarioActor());
 }
 
 void AgarioGame::SpawnRandomActors()
@@ -45,7 +42,7 @@ void AgarioGame::SpawnRandomActors()
 		float RandScale = SimpleMath::RandRange(0.f, 1.f);
 		TVector RandPos(GetRandScreenPosition());
 		RandActor->setPosition(RandPos);
-	//	RandActor->setObeysGravity(true);
+	 // RandActor->setObeysGravity(true);
 
 		if (!SpawnActorSafe(RandActor))
 		{
