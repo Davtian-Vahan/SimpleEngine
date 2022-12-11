@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include <Engine/Collision/Collision.h>
 #include <Engine/Misc/SimpleCore.h>
 
 /*
@@ -13,23 +14,22 @@ class Actor : public sf::Drawable, public IForbidCopy
 {
 	friend class GameBase;
 	typedef Actor* (Actor::*CollisionPredicate)(Actor*);
-
-	// Temporary friend
 	friend class AgarioGame;
 
 protected:
 	// Texture sprite and collision type callable
 	sf::Texture * texture;
 	sf::Sprite  * sprite;
-	CollisionPredicate CollisionFunc = nullptr;
+	CollisionPredicate CollisionFunc;
+	CollisionResponse CollResponse;
 
 	bool SetTexture(const char * file_path);
 
 protected:
 	// Physics and movement members
-	float   MaxSpeed;
-	float   Acceleration;
-	float   Weight;
+	float dAcc;
+	float MaxVelocity;
+	TVector Acceleration;
 	TVector Velocity;
 	TVector CurrentPosition;
 	TVector DesiredPosition;
@@ -56,8 +56,11 @@ public:
 	void setPosition(TVector pos);
 	void setVelocity(const TVector& InVel);
 
+	void setObeysGravity(const bool);
+
 	// Collision functions TODO: Move these somewhere smarter
 	Actor* CheckCircleCollision(Actor* C2);
+	Actor* CheckRectCollision(Actor* C2);
 
 	// Getters for velocity and position
 	inline TVector     getPosition() const { return sprite->getPosition(); }

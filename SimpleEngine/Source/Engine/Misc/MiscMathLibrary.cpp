@@ -15,6 +15,11 @@ float SimpleMath::vector_distance(const TVector& vec_1, const TVector& vec_2)
 	return std::sqrt(square(vec_2.x - vec_1.x) + square(vec_2.y - vec_1.y));
 }
 
+float SimpleMath::vector_length(const TVector& vec)
+{
+	return std::sqrt(vec.x * vec.x + vec.y * vec.y);
+}
+
 float SimpleMath::clamp(float x, float range_a, float range_b)
 {
 	return std::clamp(x, range_a, range_b);
@@ -23,6 +28,14 @@ float SimpleMath::clamp(float x, float range_a, float range_b)
 int SimpleMath::rand_range(int min, int max)
 {
 	return min + rand() % max;
+}
+
+TVector SimpleMath::NormalizeVector(const TVector& InVec)
+{
+	TVector newVec = InVec;
+	newVec.x /= vector_length(InVec);
+	newVec.y /= vector_length(InVec);
+	return newVec;
 }
 
 sf::Color SimpleMath::random_rgb()

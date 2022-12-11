@@ -15,6 +15,9 @@ public:
 	// Returns the distance between the two given vectors
 	static float vector_distance(const TVector& vec_1, const TVector&vec_2);
 
+	// Returns length of the given vector
+	static float vector_length(const TVector& vec);
+
 	// Returns given float squared
 	static float square(const float& x) { return x * x; }
 
@@ -23,6 +26,9 @@ public:
 
 	// Return random integer within the given range
 	static int rand_range(int min, int max);
+	
+	//
+	static TVector NormalizeVector(const TVector& InVec);
 
 	// 
 	static sf::Color random_rgb();

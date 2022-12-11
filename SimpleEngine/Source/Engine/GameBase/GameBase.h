@@ -26,7 +26,7 @@ public:
 
 protected:
 	// Game logic functions
-	void SpawnActor(Actor* actor);
+	bool SpawnActorSafe(Actor* actor);
 	void DestroyActor(Actor* actor);
 	void PossessToActor(Actor* actor);
 	void TickActors(float);

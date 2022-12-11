@@ -6,8 +6,9 @@
 
 // Set null collision by default
 Actor::Actor()
-	: CollisionFunc(nullptr), Acceleration(0.f),
-	Weight(0.f), MaxSpeed(0.f), bObeyGravity(false), GravityAcceleration(100.f)
+	: CollisionFunc(nullptr), Acceleration(0.f, 0.f), bObeyGravity(false),
+	GravityAcceleration(100.f), CollResponse(CollisionResponse::RESP_NONE),
+	MaxVelocity(5.f)
 {
 	try
 	{
@@ -31,34 +32,23 @@ Actor::~Actor()
 // Called every frame
 void Actor::Tick(float delta_time)
 {
-	//setPosition(CurrentPosition);
-	// Cache a desired position for main game class to grant
-	DesiredPosition = CurrentPosition + Velocity * delta_time;
+	// Update velocity based on acceleration
+	Velocity += Acceleration;
 
+	// Update position based on velocity and time
+	DesiredPosition = CurrentPosition + (Velocity /= 1.001f) * delta_time;
+
+	// Handle gravity
 	if (bObeyGravity)
 	{
 		DesiredPosition.y += delta_time * GravityAcceleration;
 	}
-
-	//SE_LOG("Actor delta_time %f: \n", delta_time);
 }
 
 // Overriden from sf::Drawable
 void Actor::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(*sprite, states);
-}
-
-// Self expl
-void Actor::Move_X(float displace)
-{
-	Velocity.x = displace;
-}
-
-// Self expl
-void Actor::Move_Y(float displace)
-{
-	Velocity.y = displace;
 }
 
 // Set texture for the sprite from a given file path
@@ -72,7 +62,33 @@ bool Actor::SetTexture(const char* file_path)
 	return true;
 }
 
-// Self expl
+
+// Circle collision callback
+Actor* Actor::CheckCircleCollision(Actor* C2)
+{
+	const Actor* C1 = this;
+	const float radius_a = C1->getSpriteDimensions().y / 2;
+	const float radius_b = C2->getSpriteDimensions().y / 2;
+	const TVector center_a = C1->getPosition();
+	const TVector center_b = C2->getPosition();
+	if (SimpleMath::circle_collision(center_a, center_b, radius_a, radius_b))
+	{
+		return C2;
+	}
+	return nullptr;
+}
+
+// Circle collision callback
+Actor* Actor::CheckRectCollision(Actor* C2)
+{
+	if (this->sprite->getGlobalBounds().intersects(C2->sprite->getGlobalBounds()))
+	{
+		return C2;
+	}
+	return nullptr;
+}
+
+// Setters
 void Actor::setPosition(TVector InPos)
 {
 	sprite->setPosition(CurrentPosition = InPos);
@@ -84,17 +100,20 @@ void Actor::setVelocity(const TVector& InVel)
 	Velocity = InVel;
 }
 
-// Circle collision callback
-Actor* Actor::CheckCircleCollision(Actor* C2)
+//
+void Actor::setObeysGravity(const bool inGravity)
 {
-	const Actor* C1 = this;
-	const float radius_a = C1->getSpriteDimensions().y / 2.f;
-	const float radius_b = C2->getSpriteDimensions().y / 2.f;
-	const TVector center_a = C1->getPosition();
-	const TVector center_b = C2->getPosition();
-	if (SimpleMath::circle_collision(center_a, center_b, radius_a, radius_b))
-	{
-		return C2;
-	}
-	return nullptr;
+	bObeyGravity = inGravity;
+}
+
+// 
+void Actor::Move_X(float displace)
+{
+	Velocity.x += displace;
+}
+
+// 
+void Actor::Move_Y(float displace)
+{
+	Velocity.y += displace;
 }

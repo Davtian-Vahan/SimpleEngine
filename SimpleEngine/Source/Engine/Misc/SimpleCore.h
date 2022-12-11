@@ -22,7 +22,6 @@
 #define SE_LOG_VEC(vec)  printf("%f, %f\n", vec.x, vec.y)
 
 typedef sf::Vector2f	   TVector;
-typedef sf::CircleShape    CircleActor;
 
 // Classes can inherit from this interface to forbid copy
 struct IForbidCopy

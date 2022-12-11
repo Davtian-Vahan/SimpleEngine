@@ -54,9 +54,14 @@ void GameBase::Tick(float dt)
 	TickActors(dt);
 }
 
-void GameBase::SpawnActor(Actor* actor)
+bool GameBase::SpawnActorSafe(Actor* actor)
 {
-	Actors.push_back(actor);
+	if (!CollisionExists(actor))
+	{
+		Actors.push_back(actor);
+		return true;
+	}
+	return false;
 }
 
 void GameBase::DestroyActor(Actor* actor)
@@ -89,11 +94,22 @@ Actor* GameBase::TryMove(Actor* InActor, TVector PossiblePos)
 	// Check for collision 
 	Actor* CollidedActor = CollisionExists(InActor);
 
-	//If moving causes collision, reset movement
+	// Respond to collision
 	if (CollidedActor)
 	{
-		InActor->setPosition(CachedPos);
-		return CollidedActor;
+		CollisionResponse CResp = CollidedActor->CollResponse;
+		switch (CResp)
+		{
+		case CollisionResponse::RESP_BLOCK:
+			InActor->setPosition(CachedPos);
+			return CollidedActor;
+		case CollisionResponse::RESP_PHYSICS:
+			CollidedActor->setVelocity(InActor->getVelocity());
+			InActor->setVelocity(InActor->getVelocity() * -1.f);
+			return CollidedActor;
+		default:
+			break;
+		}
 	}
 	return nullptr;
 }
@@ -125,8 +141,9 @@ Actor* GameBase::CollisionExists(Actor* InActor)
 TVector GameBase::GetPositionClamped(const TVector& new_pos)
 {
 	TVector res_pos = new_pos;
-	res_pos.x = SimpleMath::clamp(res_pos.x, 0, video_mode.width);
-	res_pos.y = SimpleMath::clamp(res_pos.y, 0, video_mode.height);
+
+	//res_pos.x = SimpleMath::clamp(res_pos.x, 175, video_mode.width - 175);
+	//res_pos.y = SimpleMath::clamp(res_pos.y, 175, video_mode.height - 175);
 
 	return res_pos;
 }
