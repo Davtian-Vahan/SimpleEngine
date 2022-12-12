@@ -36,7 +36,7 @@ void AgarioGame::Tick(float delta_time)
 void AgarioGame::SpawnRandomActors()
 {
 	// Spawn some random actors
-	for (int i = 0; i < 20; ++i)
+	for (int i = 0; i < 30; ++i)
 	{
 		AgarioActor* RandActor = new AgarioActor();
 		float RandScale = SimpleMath::RandRange(0.f, 1.f);

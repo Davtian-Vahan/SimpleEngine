@@ -57,11 +57,14 @@ public:
 	virtual void InitializeWorld();
 
 	void ToggleVsync(bool);
+	void SetFrameLimit(const unsigned int);
+	void SetFpsText(const std::string&);
 
 protected:
 	// Handle to main render window, video settings (Order of initialization is important)
 	sf::VideoMode    video_mode;
 	sf::RenderWindow render_window;
+	sf::Text         fps_text;
 
 	bool bGameRunning;
 	float delta_time;

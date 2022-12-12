@@ -31,3 +31,4 @@ struct IForbidCopy
 	void operator=(const IForbidCopy&) = delete;
 	//virtual ~IForbidCopy() = 0;
 };
+

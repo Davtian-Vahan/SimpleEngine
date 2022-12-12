@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <ctime>
+#include "../Misc/Paths.h"
 
 // Draw each frame, called from game loop
 void GameBase::Draw()
@@ -12,6 +13,7 @@ void GameBase::Draw()
 	{
 		render_window.draw(*Actor);
 	}
+	render_window.draw(fps_text);
 }
 
 // Display each frame, called from game loop
@@ -157,11 +159,37 @@ TVector GameBase::GetRandScreenPosition()
 void GameBase::InitializeWorld()
 {
 	bGameRunning = true;
+
+	// Setup fps text widget (possibly temporary)
+	// TODO: Predicate this procedure
+
+	static sf::Font FPS_Font;
+	std::string DefaultFontFPath = 
+		Paths::engine_resource_dir() + "\\Defaults\\Fonts\\se_default_font.ttf";
+
+	if (!FPS_Font.loadFromFile(DefaultFontFPath))
+	{
+		SE_LOG("GameBase::InitializeWorld(): Engine could not load default font.");
+		return;
+	}
+	fps_text.setFont(FPS_Font);
+//	fps_text.setPosition(video_mode.width / 2, video_mode.height / 2);
+	fps_text.setOrigin(fps_text.getLocalBounds().width / 2., fps_text.getLocalBounds().height / 2.);
 }
 
 void GameBase::ToggleVsync(bool new_vsync)
 {
 	render_window.setVerticalSyncEnabled(new_vsync);
+}
+
+void GameBase::SetFrameLimit(const unsigned int in_lim)
+{
+	render_window.setFramerateLimit(in_lim);
+}
+
+void GameBase::SetFpsText(const std::string& in_str)
+{
+	fps_text.setString(in_str);
 }
 
 // Only init constructor for now, feed it video dimensions

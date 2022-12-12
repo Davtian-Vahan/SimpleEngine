@@ -17,11 +17,14 @@ int GameManager::StartGame()
 	double fps_value = 0.f;
 	long frame_count = 0;
 
+	// Temporary frame limit to mitigate gpu usage
+	const float MaxFps = 400.f;
+
 	// Initialize game world 
 	game_instance->InitializeWorld();
-
 	// Enable vsync
 	//game_instance->ToggleVsync(true);
+	game_instance->SetFrameLimit(MaxFps);
 
 	// Start game loop
 	while (game_instance->bGameRunning)
@@ -45,10 +48,11 @@ int GameManager::StartGame()
 				fps_value = frame_count / clockFPS.restart().asSeconds();
 				frame_count = 0;
 			}
-			//printf("FPS %d\n", (int)fps_value);
 			#endif
 		}
 
+		// Update fps info on screen
+		game_instance->SetFpsText(std::to_string(int(fps_value)) + " :fps");
 		++frame_count;
 	}
 
