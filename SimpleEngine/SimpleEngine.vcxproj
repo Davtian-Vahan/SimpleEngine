@@ -136,7 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Agario\AgarioActor.cpp" />
-    <ClCompile Include="Source\Engine\ActorBase\ActorBase.cpp" />
+    <ClCompile Include="Source\Engine\Actor\Actor.cpp" />
     <ClCompile Include="Source\Engine\Collision\Collision.cpp" />
     <ClCompile Include="Source\Engine\Delegate\Delegate.hpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -149,7 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Agario\Agario.h" />
     <ClInclude Include="Source\Agario\AgarioActor.h" />
-    <ClInclude Include="Source\Engine\ActorBase\ActorBase.h" />
+    <ClInclude Include="Source\Engine\Actor\Actor.h" />
     <ClInclude Include="Source\Engine\ActorBase\IActorPhysics.h" />
     <ClInclude Include="Source\Engine\Collision\Collision.h" />
     <ClInclude Include="Source\Engine\Delegate\Delegate.h" />

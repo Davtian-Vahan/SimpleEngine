@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <Engine/Misc/SimpleCore.h>
-#include <Engine/ActorBase/ActorBase.h>
+#include <Engine/Actor/Actor.h>
 #include <Engine/Delegate/Delegate.h>
 
 class GameBase : public IForbidCopy

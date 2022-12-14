@@ -30,7 +30,7 @@
     <ClCompile Include="Source\Engine\GameManager\GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\ActorBase\ActorBase.cpp">
+    <ClCompile Include="Source\Engine\ActorBase\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Engine\Collision\Collision.cpp">
@@ -62,7 +62,7 @@
     <ClInclude Include="Source\Engine\GameManager\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\ActorBase\ActorBase.h">
+    <ClInclude Include="Source\Engine\ActorBase\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Agario\AgarioActor.h">

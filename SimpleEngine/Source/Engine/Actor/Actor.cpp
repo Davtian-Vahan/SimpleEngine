@@ -1,4 +1,4 @@
-#include "ActorBase.h"
+#include "Actor.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Drawable.hpp"
 #include <Engine/Misc/MiscMathLibrary.h>

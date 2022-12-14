@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/ActorBase/ActorBase.h>
+#include <Engine/Actor/Actor.h>
 #include <array>
 
 class AgarioActor : public Actor
