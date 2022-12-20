@@ -22,6 +22,8 @@
 #define SE_LOG_VEC(vec)  printf("%f, %f\n", vec.x, vec.y)
 
 typedef sf::Vector2f	   TVector;
+typedef int int32;
+typedef unsigned int uint32;
 
 // Classes can inherit from this interface to forbid copy
 struct IForbidCopy
@@ -32,3 +34,20 @@ struct IForbidCopy
 	//virtual ~IForbidCopy() = 0;
 };
 
+// Transform information for all transformable classes
+struct Transform
+{
+	TVector Position;
+	TVector Rotation;
+	TVector Scale;
+};
+
+struct Physics
+{
+	float   Weight;
+	float   MaxVelocity;
+	float   MaxAcceleration;
+	TVector Velocity;
+
+	//static const float GravityAcceleration;
+};

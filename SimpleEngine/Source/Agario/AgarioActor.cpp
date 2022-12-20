@@ -1,6 +1,6 @@
 #include "AgarioActor.h"
-#include "Engine/Misc/MiscMathLibrary.h"
-#include "Engine/Misc/Paths.h"
+#include <Engine/Misc/Math.h>
+#include <Engine/Misc/Paths.h>
 
 void AgarioActor::Tick(float delta_time)
 {
@@ -24,6 +24,9 @@ AgarioActor::AgarioActor()
 
 	// Set collision callback type for this actor
 	CollisionFunc = &Actor::CheckCircleCollision;
+
+	// Allocate a type of physics body
+	physics_body = new CircleBody();
 }
 
 void AgarioActor::setScale(float new_scale)

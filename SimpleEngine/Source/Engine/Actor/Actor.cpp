@@ -1,14 +1,14 @@
 #include "Actor.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Drawable.hpp"
-#include <Engine/Misc/MiscMathLibrary.h>
+#include <Engine/Misc/Math.h>
 #include <Engine/Misc/SimpleCore.h>
 
 // Set null collision by default
 Actor::Actor()
-	: CollisionFunc(nullptr), Acceleration(0.f, 0.f), bObeyGravity(false),
+	: CollisionFunc(nullptr), Acceleration(0.f, 0.f), bObeysGravity(false),
 	GravityAcceleration(100.f), CollResponse(CollisionResponse::RESP_NONE),
-	MaxVelocity(5.f)
+	MaxVelocity(5.f), physics_body(nullptr)
 {
 	try
 	{
@@ -27,6 +27,7 @@ Actor::~Actor()
 {
 	delete texture;
 	delete sprite;
+	delete physics_body;
 }
 
 // Called every frame
@@ -35,11 +36,14 @@ void Actor::Tick(float delta_time)
 	// Update velocity based on acceleration
 	Velocity += Acceleration;
 
+	// Dampen velocity
+	Velocity /= 1.01f;
+
 	// Update position based on velocity and time
-	DesiredPosition = CurrentPosition + (Velocity /= 1.001f) * delta_time;
+	DesiredPosition = CurrentPosition + Velocity * delta_time;
 
 	// Handle gravity
-	if (bObeyGravity)
+	if (bObeysGravity)
 	{
 		DesiredPosition.y += delta_time * GravityAcceleration;
 	}
@@ -71,7 +75,7 @@ Actor* Actor::CheckCircleCollision(Actor* C2)
 	const float radius_b = C2->getSpriteDimensions().y / 2;
 	const TVector center_a = C1->getPosition();
 	const TVector center_b = C2->getPosition();
-	if (SimpleMath::circle_collision(center_a, center_b, radius_a, radius_b))
+	if (SEMath::circle_collision(center_a, center_b, radius_a, radius_b))
 	{
 		return C2;
 	}
@@ -103,7 +107,7 @@ void Actor::setVelocity(const TVector& InVel)
 //
 void Actor::setObeysGravity(const bool inGravity)
 {
-	bObeyGravity = inGravity;
+	bObeysGravity = inGravity;
 }
 
 // 

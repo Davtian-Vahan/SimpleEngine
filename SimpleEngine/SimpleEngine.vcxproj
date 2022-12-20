@@ -143,7 +143,7 @@
     <ClCompile Include="Source\Agario\Agario.cpp" />
     <ClCompile Include="Source\Engine\GameBase\GameBase.cpp" />
     <ClCompile Include="Source\Engine\GameManager\GameManager.cpp" />
-    <ClCompile Include="Source\Engine\Misc\MiscMathLibrary.cpp" />
+    <ClCompile Include="Source\Engine\Misc\Math.cpp" />
     <ClCompile Include="Source\T_Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +155,7 @@
     <ClInclude Include="Source\Engine\Delegate\Delegate.h" />
     <ClInclude Include="Source\Engine\GameBase\GameBase.h" />
     <ClInclude Include="Source\Engine\GameManager\GameManager.h" />
-    <ClInclude Include="Source\Engine\Misc\MiscMathLibrary.h" />
+    <ClInclude Include="Source\Engine\Misc\Math.h" />
     <ClInclude Include="Source\Engine\Misc\Paths.h" />
     <ClInclude Include="Source\Engine\Misc\SimpleCore.h" />
   </ItemGroup>

@@ -18,7 +18,7 @@ int GameManager::StartGame()
 	long frame_count = 0;
 
 	// Temporary frame limit to mitigate gpu usage
-	const float MaxFps = 400.f;
+	const float MaxFps = 399.f;
 
 	// Initialize game world 
 	game_instance->InitializeWorld();

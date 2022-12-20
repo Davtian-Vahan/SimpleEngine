@@ -1,6 +1,6 @@
 #include "Agario.h"
 #include <Agario/AgarioActor.h>
-#include <Engine/Misc/MiscMathLibrary.h>
+#include <Engine/Misc/Math.h>
 
 AgarioGame::AgarioGame()
 	: Super(1920.f, 1080.f)
@@ -39,7 +39,7 @@ void AgarioGame::SpawnRandomActors()
 	for (int i = 0; i < 30; ++i)
 	{
 		AgarioActor* RandActor = new AgarioActor();
-		float RandScale = SimpleMath::RandRange(0.f, 1.f);
+		float RandScale = SEMath::RandRange(0.f, 1.f);
 		TVector RandPos(GetRandScreenPosition());
 		RandActor->setPosition(RandPos);
 	 // RandActor->setObeysGravity(true);
@@ -53,8 +53,8 @@ void AgarioGame::SpawnRandomActors()
 
 void AgarioGame::onKeyPressed(sf::Event & tickEvent)
 {
-	const float dAcc = 0.5f;
-	const float MaxAcc = 2.f;
+	const float dAcc = 10.f;
+	const float MaxAcc = 15.f;
 	if (tickEvent.key.code == sf::Keyboard::A)
 	{
 		ControlledActor->Acceleration.x += -dAcc;
@@ -74,8 +74,8 @@ void AgarioGame::onKeyPressed(sf::Event & tickEvent)
 		ControlledActor->Acceleration.y += dAcc;
 	}
 
-	ControlledActor->Acceleration.x = SimpleMath::clamp(ControlledActor->Acceleration.x, -MaxAcc, MaxAcc);
-	ControlledActor->Acceleration.y = SimpleMath::clamp(ControlledActor->Acceleration.y, -MaxAcc, MaxAcc);
+	ControlledActor->Acceleration.x = SEMath::clamp(ControlledActor->Acceleration.x, -MaxAcc, MaxAcc);
+	ControlledActor->Acceleration.y = SEMath::clamp(ControlledActor->Acceleration.y, -MaxAcc, MaxAcc);
 }
 
 void AgarioGame::onKeyReleased(sf::Event& tickEvent)

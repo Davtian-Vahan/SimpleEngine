@@ -1,5 +1,5 @@
 #include "GameBase.h"
-#include <Engine/Misc/MiscMathLibrary.h>
+#include <Engine/Misc/Math.h>
 #include <chrono>
 #include <thread>
 #include <ctime>
@@ -8,7 +8,7 @@
 // Draw each frame, called from game loop
 void GameBase::Draw()
 {
-	render_window.clear(sf::Color(128, 128, 128));
+	render_window.clear();
 	for (Actor* Actor : Actors)
 	{
 		render_window.draw(*Actor);
@@ -144,8 +144,8 @@ TVector GameBase::GetPositionClamped(const TVector& new_pos)
 {
 	TVector res_pos = new_pos;
 
-	//res_pos.x = SimpleMath::clamp(res_pos.x, 175, video_mode.width - 175);
-	//res_pos.y = SimpleMath::clamp(res_pos.y, 175, video_mode.height - 175);
+	//res_pos.x = SEMath::clamp(res_pos.x, 175, video_mode.width - 175);
+	//res_pos.y = SEMath::clamp(res_pos.y, 175, video_mode.height - 175);
 
 	return res_pos;
 }

@@ -20,6 +20,10 @@ protected:
 	// Texture sprite and collision type callable
 	sf::Texture * texture;
 	sf::Sprite  * sprite;
+
+	// Rigidy body
+	RigidBody* physics_body;
+
 	CollisionPredicate CollisionFunc;
 	CollisionResponse CollResponse;
 
@@ -27,6 +31,9 @@ protected:
 
 protected:
 	// Physics and movement members
+	Transform tranform;
+	Physics   physics;
+
 	float dAcc;
 	float MaxVelocity;
 	TVector Acceleration;
@@ -34,7 +41,7 @@ protected:
 	TVector CurrentPosition;
 	TVector DesiredPosition;
 
-	bool bObeyGravity;
+	bool bObeysGravity;
 	float GravityAcceleration;
 
 public:
